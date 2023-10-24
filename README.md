@@ -34,6 +34,12 @@ Everytime, you make changes to the entities, create new ones, just add new migra
 ```cmd
 dotnet ef  migrations add <migration-name>
 ```
+
+Note: if your project has more than one database context, mention the context along with the command:
+```cmd
+dotnet ef  migrations add <migration-name> --context <database-context-name>
+```
+
 and then execute to apply migration to the database
 ```cmd 
 dotnet ef database update
