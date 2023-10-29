@@ -24,7 +24,32 @@ namespace MovieApp.Services
 
         public static void SeedActors(ActorDBContext _dbContext)
         {
-           
+            var characterNames = new List<string>
+            {
+                "John Doe",
+                "Alice Johnson",
+                "Michael Smith",
+                "Emma Thompson",
+                "Leonardo DiCaprio",
+                "Tom Hanks",
+                "Brad Pitt",
+                "Bradley Cooper",
+                "Hugh Jackman",
+                "Nicole Kidman",
+                "Emily Blunt"
+            };
+
+            var fakeActors = new Faker<Actor>()
+                .RuleFor(a => a.Id, f => f.Random.Guid())
+                .RuleFor(a => a.Name, f => f.PickRandom(characterNames))
+                .RuleFor(a => a.Age, f => f.Random.Number(12, 89))
+                .RuleFor(a => a.AcademyWinner, f => f.Random.Bool());
+
+            var actorsToBeAdded = fakeActors.Generate(10); // Generate 10 fake actors
+            _dbContext.Actors.AddRange(actorsToBeAdded);
+
+            _dbContext.SaveChanges();
+
         }
 
         public static void SeedMovieActorsMapping(ActorDBContext _dbContext)
