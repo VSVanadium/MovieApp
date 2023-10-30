@@ -53,8 +53,18 @@ namespace MovieApp.Services
         }
 
         public static void SeedMovieActorsMapping(ActorDBContext _dbContext)
-        {            
+        {
+            var allMovies = _dbContext.Movies.Select(x => x.Id).Take(10).ToList();
+            var allActors = _dbContext.Actors.Select(x => x.Id).Take(10).ToList();
 
+            var movieActors = new Faker<MovieActor>()
+            .RuleFor(ma => ma.MovieId, f => f.PickRandom(allMovies))
+            .RuleFor(a => a.ActorId, f => f.PickRandom(allActors));
+
+            var mappingsToBeAdded = movieActors.Generate(10); // Generate 10 fake mappings
+            _dbContext.MovieActors.AddRange(mappingsToBeAdded);
+
+            _dbContext.SaveChanges();
         }
     }
 }
