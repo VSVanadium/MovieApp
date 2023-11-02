@@ -13,13 +13,14 @@ namespace ConsoleApp.Entities
 
         public DbSet<MovieActor> MovieActors { get; set; }
 
-        private readonly IConfiguration _configuration;
-        private readonly String _connectionString;
+        private readonly  IConfiguration? _configuration;
+        private readonly  String? _connectionString;
 
         public ActorDBContext(string connectionString)
         {
             _connectionString = connectionString;
         }
+
         public ActorDBContext(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -29,7 +30,7 @@ namespace ConsoleApp.Entities
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
-                var connectionString = _configuration.GetConnectionString("DefaultConnection");
+                var connectionString = _configuration?.GetConnectionString("DefaultConnection");
                 optionsBuilder.UseSqlServer(connectionString);
             }
             else
