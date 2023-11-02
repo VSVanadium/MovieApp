@@ -23,7 +23,7 @@ using (var dbContext = new ActorDBContext(configuration))
        .Select(m => new
        {
            MovieTitle = m.Name,
-           ReleaseYear = m.ReleaseYear,
+           m.ReleaseYear,
            Actors = m.MovieActors!.Select(ma => ma.Actor!.Name).ToList()
        })
        .ToList();
