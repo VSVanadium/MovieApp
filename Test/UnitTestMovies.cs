@@ -1,10 +1,8 @@
+using Bogus;
+using ConsoleApp.Data;
 using ConsoleApp.Entities;
-using NUnit.Framework;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using ConsoleApp.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+using MovieApp.Data;
 
 namespace Test
 {
@@ -27,12 +25,14 @@ namespace Test
             int releaseYear = 2022;
 
             // Act
-            _dbContext.Movies.Add(new Movie() { Id = Guid.NewGuid(), Name = movieTitle, ReleaseYear = releaseYear });
+            _dbContext.Movies.Add(new Movie() { Id = Guid.NewGuid(), Name = movieTitle, ReleaseYear = releaseYear, Genre = Genre.Scifi });
             _dbContext.SaveChanges();
 
             // Assert
             var addedMovie = _dbContext.Movies.FirstOrDefault(m => m.Name == movieTitle && m.ReleaseYear == releaseYear);
             Assert.NotNull(addedMovie);
+            Assert.That(addedMovie.ReleaseYear, Is.EqualTo(releaseYear));
+            Assert.That(addedMovie.Genre, Is.EqualTo(Genre.Scifi));
 
         }
 
@@ -43,12 +43,16 @@ namespace Test
             string actorName = "Michelle Yeoh";
 
             // Act
-            _dbContext.Actors.Add(new Actor() { Name = actorName });
+            _dbContext.Actors.Add(new Actor() { Name = actorName, Age = 52, Gender = Gender.Female, AcademyWinner = true });
             _dbContext.SaveChanges();
 
             // Assert
             var addedActor = _dbContext.Actors.FirstOrDefault(a => a.Name == actorName);
             Assert.NotNull(addedActor);
+            Assert.That(addedActor.Age, Is.EqualTo(52));
+            Assert.That(addedActor.Gender, Is.EqualTo(Gender.Female));
+            Assert.That(addedActor.AcademyWinner, Is.EqualTo(true));
+
         }
 
         [Test]
@@ -61,7 +65,7 @@ namespace Test
             string actor1Name = "Daniel Radcliffe";
             string actor2Name = "Emma Watson";
 
-            var movie = new Movie() { Id = Guid.NewGuid(), Name = movieTitle, ReleaseYear = releaseYear };
+            var movie = new Movie() { Id = Guid.NewGuid(), Name = movieTitle, ReleaseYear = releaseYear, Genre = Genre.Scifi };
             var actor1 = new Actor() { Id = Guid.NewGuid(), Name = actor1Name, Age = 34 };
             var actor2 = new Actor() { Id = Guid.NewGuid(), Name = actor2Name, Age = 31 };
 
