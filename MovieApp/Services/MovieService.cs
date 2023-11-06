@@ -1,27 +1,39 @@
 ﻿using ConsoleApp.Entities;
+using MovieApp.Data;
 
 namespace ConsoleApp.Services
 {
     public class MovieService
     {
-        private readonly ActorDBContext _context;
+        //TODO: convert into Builder pattern( movieBuilderService) and Test it
+        //TODO: only movie.build do the database context changes and returns the object, title is manadatory
+        private readonly ActorDBContext? _context;
+
+        private Movie? movie;
 
         public MovieService(ActorDBContext context)
         {
             _context = context;
+            movie = new Movie();
         }
 
-        public void AddMovie(string title, int releaseYear)
+        public Movie? AddTitle(string title)
         {
-            _context.Movies.Add(new Movie { Name = title, ReleaseYear = releaseYear });
-            _context.SaveChanges();
+            if (string.IsNullOrEmpty(movie!.Name))
+                throw new InvalidDataException($"Please provide a vaild movie name!");
+
+            if (IfMovieWithTitleExists(movie.Name))
+                throw new InvalidDataException($"A Movie :{movie.Name} with this title alread exists!!!");
+
+            movie!.Name = title;
+            return movie;
         }
 
-        public void AddActor(string name)
+        private bool IfMovieWithTitleExists(string movieTitle)
         {
-            _context.Actors.Add(new Actor { Name = name });
-            _context.SaveChanges();
-        }
+            movie = _context?.Movies.FirstOrDefault(x => x.Name!.ToLower() == movieTitle.ToLower());
+            return (movie != null) ? true : false;
 
+        }
     }
 }
