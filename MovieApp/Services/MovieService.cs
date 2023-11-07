@@ -29,6 +29,15 @@ namespace ConsoleApp.Services
             return movie;
         }
 
+        public Movie? Build()
+        {
+            _context?.Movies.Add(movie!);
+            _context?.SaveChanges();
+
+            movie = _context?.Movies.FirstOrDefault(x => x.Name == movie!.Name);
+            return movie;
+        }
+
         private bool IfMovieWithTitleExists(string movieTitle)
         {
             movie = _context?.Movies.FirstOrDefault(x => x.Name!.ToLower() == movieTitle.ToLower());
