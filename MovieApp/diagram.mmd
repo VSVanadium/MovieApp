@@ -1,0 +1,31 @@
+﻿classDiagram
+    Base <|-- Movie
+    Base <|-- Actor
+    Base : +Guid Id
+    Base : +int name
+    Base : +DateTime CreatedDate
+    Base : +DateTime UpdatedDate
+    Base : +Guid Createdby
+    Base : +Guid Updatedby
+    Base : +bool IsDeleted
+    MovieActor --> Movie  
+    MovieActor --> Actor 
+    Movie --> Rating : contains
+    Movie --> Genre : contains
+
+    class Actor {
+      +int Age 
+      +Gender Gender
+      +bool AcademyWinner
+    }
+   
+    class Movie {
+      +int ReleaseYear
+      +Rating Rating
+      +Genre Genre
+    }
+
+    class MovieActor {
+        +Movie Movie
+        +Actor Actor
+    }
