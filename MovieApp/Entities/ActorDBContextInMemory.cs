@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
+using MovieApp.Entities;
 
 namespace ConsoleApp.Entities
 {
-    public class ActorDBContextInMemory : DbContext
+    public class ActorDBContextInMemory : DbContext, IDBContext
     {
        
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Movie> Movies { get; set; }
-
         public DbSet<MovieActor> MovieActors { get; set; }
 
 
@@ -68,5 +68,10 @@ namespace ConsoleApp.Entities
             }
         }
 
+        void IDBContext.SaveChanges()
+        {
+            AddTimestamps();
+            base.SaveChanges();
+        }
     }
 }
