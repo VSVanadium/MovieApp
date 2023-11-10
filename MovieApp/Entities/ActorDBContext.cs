@@ -10,7 +10,6 @@ namespace ConsoleApp.Entities
        
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Movie> Movies { get; set; }
-
         public DbSet<MovieActor> MovieActors { get; set; }
 
         private readonly  IConfiguration? _configuration;

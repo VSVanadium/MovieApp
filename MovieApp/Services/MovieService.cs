@@ -5,19 +5,16 @@ namespace ConsoleApp.Services
 {
     public class MovieService
     {
-        //TODO: convert into Builder pattern( movieBuilderService) and Test it
-        //TODO: only movie.build do the database context changes and returns the object, title is manadatory
+        
         private readonly ActorDBContext? _context;
-
-        private Movie? movie;
+        private Movie movie = new Movie();
 
         public MovieService(ActorDBContext context)
         {
             _context = context;
-            movie = new Movie();
         }
 
-        public Movie? AddTitle(string title)
+        public MovieService AddTitle(string title)
         {
             if (string.IsNullOrEmpty(movie!.Name))
                 throw new InvalidDataException($"Please provide a vaild movie name!");
@@ -26,16 +23,16 @@ namespace ConsoleApp.Services
                 throw new InvalidDataException($"A Movie :{movie.Name} with this title alread exists!!!");
 
             movie!.Name = title;
-            return movie;
+            return this;
         }
 
-        public Movie? Build()
+        public MovieService Build()
         {
             _context?.Movies.Add(movie!);
             _context?.SaveChanges();
 
             movie = _context?.Movies.FirstOrDefault(x => x.Name == movie!.Name);
-            return movie;
+            return this;
         }
 
         private bool IfMovieWithTitleExists(string movieTitle)
