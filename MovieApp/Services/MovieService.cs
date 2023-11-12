@@ -26,6 +26,25 @@ namespace ConsoleApp.Services
             return this;
         }
 
+        public MovieService AddReleaseYear(int releaseYear)
+        {
+            //TODO: validation release year > 1900
+            movie!.ReleaseYear = releaseYear;
+            return this;
+        }
+
+        public MovieService AddGenre(Genre genre)
+        {
+            //TODO: add genre
+            return this;
+        }
+
+        public MovieService AddRating(decimal rating)
+        {
+            //TODO: calidation between 0 to 5,  add rating
+            return this;
+        }
+
         public MovieService Build()
         {
             _context?.Movies.Add(movie!);
