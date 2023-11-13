@@ -36,6 +36,7 @@ namespace ConsoleApp.Services
         public MovieService AddGenre(Genre genre)
         {
             //TODO: add genre
+            movie.Genre = genre;
             return this;
         }
 
