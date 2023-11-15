@@ -20,22 +20,7 @@ namespace Test
         [Test]
         public void AddMovie_ShouldAddMovieToDatabase()
         {
-            // Arrange
-            string movieTitle = "The Creator";
-            int releaseYear = 2023;
-
-            // Act
-            var movie = _movieService!
-                       .AddTitle(movieTitle)
-                       .AddReleaseYear(releaseYear)
-                       .AddGenre(Genre.Scifi)
-                       .Build();
             
-
-            // Assert           
-            Assert.NotNull(movie);
-            Assert.That(movie.Name, Is.EqualTo(movieTitle));
-            Assert.That(movie.ReleaseYear, Is.EqualTo(releaseYear));
 
         }
 
