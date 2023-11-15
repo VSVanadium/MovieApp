@@ -1,35 +1,30 @@
 ﻿using ConsoleApp.Entities;
 using MovieApp.Data;
+using MovieApp.Entities;
 
 namespace ConsoleApp.Services
 {
     public class MovieService
     {
         
-        private readonly ActorDBContext? _context;
+        private readonly IDBContext? _context;
         private Movie movie = new Movie();
 
-        public MovieService(ActorDBContext context)
+        public MovieService(IDBContext context)
         {
             _context = context;
         }
 
         public MovieService AddTitle(string title)
         {
-            if (string.IsNullOrEmpty(movie!.Name))
-                throw new InvalidDataException($"Please provide a vaild movie name!");
-
-            if (IfMovieWithTitleExists(movie.Name))
-                throw new InvalidDataException($"A Movie :{movie.Name} with this title alread exists!!!");
-
-            movie!.Name = title;
+            movie.Name = title;
             return this;
         }
 
         public MovieService AddReleaseYear(int releaseYear)
         {
             //TODO: validation release year > 1900
-            movie!.ReleaseYear = releaseYear;
+            movie.ReleaseYear = releaseYear;
             return this;
         }
 
@@ -46,20 +41,10 @@ namespace ConsoleApp.Services
             return this;
         }
 
-        public MovieService Build()
+        public Movie? Build()
         {
-            _context?.Movies.Add(movie!);
-            _context?.SaveChanges();
-
-            movie = _context?.Movies.FirstOrDefault(x => x.Name == movie!.Name);
-            return this;
+            return movie;
         }
 
-        private bool IfMovieWithTitleExists(string movieTitle)
-        {
-            movie = _context?.Movies.FirstOrDefault(x => x.Name!.ToLower() == movieTitle.ToLower());
-            return (movie != null) ? true : false;
-
-        }
     }
 }
