@@ -1,15 +1,16 @@
 ﻿using ConsoleApp.Entities;
 using MovieApp.Data;
+using MovieApp.Entities;
 
 namespace ConsoleApp.Services
 {
     public class MovieService
     {
         
-        private readonly ActorDBContext? _context;
+        private readonly IDBContext? _context;
         private Movie movie = new Movie();
 
-        public MovieService(ActorDBContext context)
+        public MovieService(IDBContext context)
         {
             _context = context;
         }
@@ -46,13 +47,13 @@ namespace ConsoleApp.Services
             return this;
         }
 
-        public MovieService Build()
+        public Movie? Build()
         {
             _context?.Movies.Add(movie!);
             _context?.SaveChanges();
 
             movie = _context?.Movies.FirstOrDefault(x => x.Name == movie!.Name);
-            return this;
+            return movie;
         }
 
         private bool IfMovieWithTitleExists(string movieTitle)
