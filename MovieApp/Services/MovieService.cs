@@ -17,20 +17,14 @@ namespace ConsoleApp.Services
 
         public MovieService AddTitle(string title)
         {
-            if (string.IsNullOrEmpty(title))
-                throw new InvalidDataException($"Please provide a vaild movie name!");
-
-            if (IfMovieWithTitleExists(title))
-                throw new InvalidDataException($"A Movie :{title} with this title alread exists!!!");
-
-            movie!.Name = title;
+            movie.Name = title;
             return this;
         }
 
         public MovieService AddReleaseYear(int releaseYear)
         {
             //TODO: validation release year > 1900
-            movie!.ReleaseYear = releaseYear;
+            movie.ReleaseYear = releaseYear;
             return this;
         }
 
@@ -49,18 +43,8 @@ namespace ConsoleApp.Services
 
         public Movie? Build()
         {
-            _context?.Movies.Add(movie!);
-            _context?.SaveChanges();
-
-            movie = _context?.Movies.FirstOrDefault(x => x.Name == movie!.Name);
             return movie;
         }
 
-        private bool IfMovieWithTitleExists(string movieTitle)
-        {
-            movie = _context?.Movies.FirstOrDefault(x => x.Name!.ToLower() == movieTitle.ToLower());
-            return (movie != null) ? true : false;
-
-        }
     }
 }
