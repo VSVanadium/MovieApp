@@ -21,8 +21,8 @@ namespace Test
         public void AddMovie_ShouldAddMovieToDatabase()
         {
             // Arrange
-            string movieTitle = "Everything everywhere all at once!";
-            int releaseYear = 2022;
+            string movieTitle = "The Creator";
+            int releaseYear = 2023;
 
             // Act
             var movie = _movieService!
