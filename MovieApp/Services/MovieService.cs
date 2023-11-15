@@ -17,11 +17,11 @@ namespace ConsoleApp.Services
 
         public MovieService AddTitle(string title)
         {
-            if (string.IsNullOrEmpty(movie!.Name))
+            if (string.IsNullOrEmpty(title))
                 throw new InvalidDataException($"Please provide a vaild movie name!");
 
-            if (IfMovieWithTitleExists(movie.Name))
-                throw new InvalidDataException($"A Movie :{movie.Name} with this title alread exists!!!");
+            if (IfMovieWithTitleExists(title))
+                throw new InvalidDataException($"A Movie :{title} with this title alread exists!!!");
 
             movie!.Name = title;
             return this;
