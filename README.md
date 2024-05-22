@@ -49,3 +49,7 @@ You can revert migration, by providing the last valid migration name.
 ```cmd
 dotnet ef database update <migration-name>
 ```
+or you can remove the last migration using command:
+```cmd
+dotnet ef migrations remove
+```
